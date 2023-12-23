@@ -3,12 +3,26 @@
 import Link from 'next/link';       // use to navigate
 import Image from 'next/image';     // optimize image
 import { useState, useEffect } from 'react';
-import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
+import { signIn, signOut, useSession, getProviders } 
+from 'next-auth/react';
 
 const Nav = () => {
 
   // mock the state the user is logged in or not
   const isUserLoggedIn = true;
+
+  const [providers, getProviders] = useState (null);
+
+  useEffect(() => {
+    // Code to run on component mount or update
+    const setProviders = async () => {
+      const response = await getProviders();
+
+      setProviders(response);
+    }
+
+    setProviders();
+  }, [])
 
   return (
     // navigation structure
@@ -24,20 +38,51 @@ const Nav = () => {
         <p className="logo_text"> Promptworld </p>
       </Link>
 
-      {/* Mobile Navigation */}
+      {/* Desktop Navigation */}
       <div className ="sm:flex hidden">
-        {isUserLoggedIn? (
+        {isUserLoggedIn ? (
           <div className ="flex gap-3 md:gap-5"> 
             <Link href="/create-prompt" className="black_btn">
               Create Post
             </Link>
+            <button type="button" onClick={signOut} className="outline_btn">
+              Sign Out
+            </button>
+            <Link href="/profile">
+              <Image 
+                src = "assets/images/logo.svg"
+                width = {37}
+                height = {37}
+                className = "rounded-full"
+                alt = "Profile"
+              />
+            </Link>
           </div>
         ): (
           <>
+          {providers && 
+            Object.values(providers).map((provider) => (
+              <button
+                type="button"
+                key={provider.name}
+                onClick={() => signIn(provider.id)}
+                className="black_btn"
+              >
+                Sign In
+              </button>
+            ))}
           </>
         )}
       </div>
+
+      {/* Mobile Navigation */}
+      <div className="sm:hidden flex relative">
+
+      </div>
+
     </nav>
+
+    
   )
 }
 
