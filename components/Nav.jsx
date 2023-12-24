@@ -30,7 +30,7 @@ const Nav = () => {
     <nav className="flex-between w-full mb-16 pt-3">
       <Link href="/" className="flex gap-2 flex-center">
         <Image
-          src="/assets/images/logo.svg"
+          src="/assets/images/orange_logo.svg"
           alt="Promptworld Logo"
           width={30}
           height={30}
@@ -51,7 +51,7 @@ const Nav = () => {
             </button>
             <Link href="/profile">
               <Image 
-                src = "/assets/images/logo.svg"
+                src = "/assets/images/orange_logo.svg"
                 width = {37}
                 height = {37}
                 className = "rounded-full"
@@ -81,7 +81,7 @@ const Nav = () => {
         {isUserLoggedIn ? (
           <div className ="flex">
             <Image 
-              src="/assets/images/logo.svg"
+              src="/assets/images/orange_logo.svg"
               width={37}
               height={37}
               className="rounded-full"
