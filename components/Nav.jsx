@@ -11,12 +11,13 @@ const Nav = () => {
   // mock the state the user is logged in or not
   const isUserLoggedIn = true;
 
-  const [providers, getProviders] = useState (null);
+  const [providers, setProviders] = useState (null);
+  const [toggleDropdown, setToggleDropdown] = useState (false);
 
   useEffect(() => {
     // Code to run on component mount or update
     const setProviders = async () => {
-      const response = await getProviders();
+      const response = await setProviders();
 
       setProviders(response);
     }
@@ -50,7 +51,7 @@ const Nav = () => {
             </button>
             <Link href="/profile">
               <Image 
-                src = "assets/images/logo.svg"
+                src = "/assets/images/logo.svg"
                 width = {37}
                 height = {37}
                 className = "rounded-full"
@@ -77,7 +78,33 @@ const Nav = () => {
 
       {/* Mobile Navigation */}
       <div className="sm:hidden flex relative">
-
+        {isUserLoggedIn ? (
+          <div className="flex">
+            <Image
+              src="/assets/images/logo.svg"
+              alt="profile"
+              width={37}
+              height={37}
+              className="rounded-full"
+              onClick={() => {setToggleDropdown((prev) => {!prev})}}
+        />
+        <p className="logo_text"> Promptworld </p>
+          </div>
+        ) : (
+          <>
+          {providers && 
+            Object.values(providers).map((provider) => (
+              <button
+                type="button"
+                key={provider.name}
+                onClick={() => signIn(provider.id)}
+                className="black_btn"
+              >
+                Sign In
+              </button>
+            ))}
+          </>
+        )}
       </div>
 
     </nav>
