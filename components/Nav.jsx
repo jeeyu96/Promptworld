@@ -17,7 +17,7 @@ const Nav = () => {
   useEffect(() => {
     // Code to run on component mount or update
     const setProviders = async () => {
-      const response = await setProviders();
+      const response = await getProviders();
 
       setProviders(response);
     }
@@ -77,18 +77,45 @@ const Nav = () => {
       </div>
 
       {/* Mobile Navigation */}
-      <div className="sm:hidden flex relative">
+      <div className = "sm:flex hidden">
         {isUserLoggedIn ? (
-          <div className="flex">
-            <Image
+          <div className ="flex">
+            <Image 
               src="/assets/images/logo.svg"
-              alt="profile"
               width={37}
               height={37}
               className="rounded-full"
-              onClick={() => {setToggleDropdown((prev) => {!prev})}}
-        />
-        <p className="logo_text"> Promptworld </p>
+              alt="profile"
+              onClick={() => setToggleDropdown((prev) => {!prev})}
+            />
+
+            {toggleDropdown && (
+              <div className="dropdown">
+                <Link
+                  href="/profile"
+                  className="dropdown_link"
+                  onClick={() => setToggleDropdown(false)}
+                >
+                  My Profile
+                </Link>
+                <Link
+                  href="/create-prompt"
+                  className="dropdown_link"
+                  onClick={() => setToggleDropdown(false)}
+                >
+                  Create Prompt
+                </Link>
+                <button
+                  type="button"
+                  className="mt-5 w-full black_btn"
+                  onClick={() => {
+                    setToggleDropdown(false); 
+                    signOut()} }
+                >
+                  Sign Out
+                </button>
+              </div>
+            )}
           </div>
         ) : (
           <>
@@ -105,6 +132,7 @@ const Nav = () => {
             ))}
           </>
         )}
+
       </div>
 
     </nav>
